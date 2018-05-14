@@ -1,0 +1,6 @@
+framework module Pods_BoVolumesForipad {
+  umbrella header "Pods-BoVolumesForipad-umbrella.h"
+
+  export *
+  module * { export * }
+}
