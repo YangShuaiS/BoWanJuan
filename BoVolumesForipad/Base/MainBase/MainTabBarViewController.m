@@ -35,8 +35,8 @@
     UITabBarItem *item1 = [[UITabBarItem alloc] init];
     item1.tag = 1;
     [item1 setTitle:@"首页"];
-    [item1 setImage:[UIImage imageNamed:@"home"]];
-    [item1 setSelectedImage:[[UIImage imageNamed:@"home-Click"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    [item1 setImage:[UIImage imageNamed:@"tab-project"]];
+    [item1 setSelectedImage:[[UIImage imageNamed:@"tab-Project-Click"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     [item1 setTitleTextAttributes:@{NSForegroundColorAttributeName: TabBarTitleColor}
                          forState:UIControlStateSelected];
     

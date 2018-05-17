@@ -30,7 +30,7 @@
         make.top.equalTo(ws).with.offset(0);
         make.right.equalTo(ws).with.offset(0);
         make.bottom.equalTo(ws).with.offset(0);
-        make.height.mas_offset(180);
+        make.height.mas_offset(LENGTH(124));
     }];
 }
 
@@ -60,7 +60,7 @@
 - (UICollectionView *)collectionView {
     if (_collectionView == nil) {
         UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-        flowLayout.itemSize = CGSizeMake(100,180);
+        flowLayout.itemSize = CGSizeMake(WIDTH/5,LENGTH(124));
         //定义每个UICollectionView 横向的间距
         flowLayout.minimumLineSpacing = 0;
         //定义每个UICollectionView 纵向的间距

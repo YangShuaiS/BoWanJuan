@@ -16,6 +16,7 @@
     BaseView * backView;
     BaseLabel * Title;
     BaseLabel * MoreTitle;
+    BaseButton * huanyibibutton;
     CGFloat tableViewHeight;
 }
 - (void)setItemarray:(NSMutableArray *)itemarray{
@@ -32,38 +33,52 @@
 -(void)setupUI{
     backView = [BaseView new];
     backView.backgroundColor = RANDOMCOLOR;
-    backView.layer.cornerRadius = 10;
-    backView.layer.masksToBounds = YES;
     [self addSubview:backView];
     
-    Title = [[BaseLabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0) LabelTxteColor:LinShiZiTiYanSe LabelFont:TextFont(LinShiFont) TextAlignment:NSTextAlignmentLeft Text:@"新增勋章"];
+    BaseView * xianView = [BaseView new];
+    xianView.backgroundColor = RANDOMCOLOR;
+    [self addSubview:xianView];
+    
+    Title = [[BaseLabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0) LabelTxteColor:LinShiZiTiYanSe LabelFont:TextFont(Font20) TextAlignment:NSTextAlignmentLeft Text:@"新发勋章"];
     [backView addSubview:Title];
     
-    MoreTitle = [[BaseLabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0) LabelTxteColor:LinShiZiTiYanSe LabelFont:TextFont(LinShiFont) TextAlignment:NSTextAlignmentLeft Text:@"更多勋章"];
+    
+    MoreTitle = [[BaseLabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0) LabelTxteColor:LinShiZiTiYanSe LabelFont:TextFont(Font16) TextAlignment:NSTextAlignmentLeft Text:@"查看更多"];
     [backView addSubview:MoreTitle];
     
-    [self addSubview:self.tableView];
-    [self updataview];
-
-}
-- (void)updataview{
     WS(ws);
     [backView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(ws).with.offset(12);
-        make.top.equalTo(ws).with.offset(10);
-        make.right.equalTo(ws).with.offset(-12);
+        make.left.equalTo(ws).with.offset(0);
+        make.top.equalTo(ws).with.offset(LENGTH(10));
+        make.right.equalTo(ws).with.offset(0);
         make.bottom.equalTo(ws).with.offset(0);
     }];
     
+    [xianView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self->backView.mas_top).with.offset(LENGTH(32));
+        make.left.equalTo(self->backView.mas_left).with.offset(LENGTH(26));
+        make.width.mas_equalTo(2);
+        make.height.mas_equalTo(17);
+    }];
+    
     [Title mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self->backView.mas_top).with.offset(12);
-        make.left.equalTo(self->backView.mas_left).with.offset(12);
+        make.left.equalTo(xianView.mas_left).with.offset(LENGTH(10));
+        make.centerY.mas_equalTo(xianView.mas_centerY);
     }];
     
     [MoreTitle mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self->backView.mas_top).with.offset(12);
-        make.right.equalTo(self->backView.mas_right).with.offset(-12);
+        make.centerY.mas_equalTo(xianView.mas_centerY);
+        make.right.equalTo(self->backView.mas_right).with.offset(-LENGTH(27));
     }];
+    
+    [huanyibibutton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self->backView.mas_top).with.offset(0);
+        make.right.equalTo(self->backView.mas_right).with.offset(0);
+        make.left.equalTo(self->MoreTitle.mas_left).with.offset(0);
+        make.bottom.equalTo(self->MoreTitle.mas_bottom).with.offset(0);
+    }];
+    
+    [self addSubview:self.tableView];
     [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self->MoreTitle.mas_bottom).with.offset(20);
         make.left.equalTo(self->backView.mas_left).with.offset(0);
@@ -71,39 +86,40 @@
         make.bottom.equalTo(self->backView.mas_bottom).with.offset(0);
         make.height.mas_equalTo(ws.tableView.contentSize.height);
     }];
+    [_tableView reloadData];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self uptableview];
+    });
 
+}
+- (void)uptableview{
+    WS(ws);
+    NSArray * cellarray = [self cellsForTableView:ws.tableView];
+    for (XinZengXunZhangTableViewCell * cell in cellarray) {
+        self->tableViewHeight = self->tableViewHeight + cell.frame.size.height;
+    }
+    [ws.tableView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(self->tableViewHeight);
+        
+    }];
 }
 
 - (void)layoutSubviews{
-
     [super layoutSubviews];
-    WS(ws);
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
-            NSArray * cellarray = [self cellsForTableView:ws.tableView];
-            for (XinZengXunZhangTableViewCell * cell in cellarray) {
-                self->tableViewHeight = self->tableViewHeight + cell.frame.size.height;
-            }
-            [ws.tableView mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.height.mas_equalTo(self->tableViewHeight);
-    
-            }];
-        });
-
 }
 - (UITableView *)tableView
 {
     if (!_tableView) {
         _tableView = [[BaseTableView alloc] init];
-        _tableView.separatorStyle = UITableViewStyleGrouped;
+        _tableView.separatorStyle = UITableViewStylePlain;
         _tableView.delegate = self;
         _tableView.dataSource = self;
-        _tableView.backgroundColor = RGB(0xf8, 0xf8, 0xf8);
+        _tableView.backgroundColor = [UIColor clearColor];
         //使tableview无数据时候无下划线
         _tableView.tableFooterView = [[UIView alloc]init];
         _tableView.estimatedRowHeight = 300;//估算高度
         _tableView.rowHeight = UITableViewAutomaticDimension;
-        
+
     }else{
         [_tableView reloadData];
     }
@@ -127,7 +143,7 @@
         cell=[[XinZengXunZhangTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:rid];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
+    cell.itemarray = _itemarray;
     return cell;
     
 }

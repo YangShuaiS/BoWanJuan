@@ -13,7 +13,9 @@
 
 @end
 
-@implementation AppDelegate
+@implementation AppDelegate{
+    NSInteger inter ;
+}
 
 - (void)ConfirmTheSize{
     BOOL isIphoneX = KIsiPhoneX;
@@ -31,10 +33,34 @@
     [self ConfirmTheSize];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
+    inter = 0;
     MainTabBarViewController * main = [MainTabBarViewController new];
     self.window.rootViewController = main;
     [self.window makeKeyWindow];
+    //UIApplicationBackgroundFetchIntervalMinimum表示尽可能频繁去获取，如果需要指定至少多少时间更新一次就需要给定一个时间值
+    [application setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
+    NSDate *date = [NSDate date]; // 获得时间对象
+    
+    NSDateFormatter *forMatter = [[NSDateFormatter alloc] init];
+    
+    [forMatter setDateFormat:@"HH-mm-ss yyyy-MM-dd"];
+    
+    NSString *dateStr = [forMatter stringFromDate:date];
+    MJExtensionLog(@"###################%@",dateStr);
     return YES;
+}
+
+- (void) application:(UIApplication *)application
+performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    NSDate *date = [NSDate date]; // 获得时间对象
+    
+    NSDateFormatter *forMatter = [[NSDateFormatter alloc] init];
+    
+    [forMatter setDateFormat:@"HH-mm-ss yyyy-MM-dd"];
+    
+    NSString *dateStr = [forMatter stringFromDate:date];
+    MJExtensionLog(@"###################%@",dateStr);
 }
 
 
@@ -111,5 +137,6 @@
         abort();
     }
 }
+
 
 @end

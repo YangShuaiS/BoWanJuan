@@ -24,7 +24,7 @@
     WS(ws);
     imageView = [FLAnimatedImageView new];
     imageView.backgroundColor = RANDOMCOLOR;
-    imageView.layer.cornerRadius = 35;
+    imageView.layer.cornerRadius = LENGTH(25);
     imageView.layer.masksToBounds = YES;
     [self.contentView addSubview:imageView];
     
@@ -33,16 +33,16 @@
     
     [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws);
-        make.top.equalTo(ws).with.offset(23);
-        make.height.mas_offset(70);
-        make.width.mas_offset(70);
+        make.top.equalTo(ws).with.offset(LENGTH(24));
+        make.height.mas_offset(LENGTH(50));
+        make.width.mas_offset(LENGTH(50));
     }];
     
     [name mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(ws);
-        make.top.equalTo(self->imageView.mas_bottom).with.offset(20);
+        make.top.equalTo(self->imageView.mas_bottom).with.offset(LENGTH(16));
         make.width.mas_offset(100);
-        make.bottom.equalTo(ws).with.offset(-20);
+//        make.bottom.equalTo(ws).with.offset(-20);
 
     }];
 }

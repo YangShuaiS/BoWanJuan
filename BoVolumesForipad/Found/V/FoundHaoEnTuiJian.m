@@ -13,7 +13,7 @@
 
 @end
 @implementation FoundHaoEnTuiJian{
-    BaseLabel * Title;
+    MenuNav * menuNav;
     CGFloat tableViewHeight;
 
 }
@@ -27,22 +27,59 @@
 }
 -(void)setupUI{
     WS(ws);
-    Title = [[BaseLabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0) LabelTxteColor:LinShiZiTiYanSe LabelFont:TextFont(LinShiFont) TextAlignment:NSTextAlignmentLeft Text:@"好文推荐"];
-    [self addSubview:Title];
+    menuNav = [MenuNav new];
+    menuNav.titles = @"你的同学";
+    menuNav.menuNavStyle = MenuNavStyleTitle;
+    [self addSubview:menuNav];
     
-    [Title mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(ws).with.offset(12);
-        make.left.equalTo(ws).with.offset(12);
+    
+    [menuNav mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(ws).with.offset(0);
+        make.top.equalTo(ws).with.offset(0);
+        make.right.equalTo(ws).with.offset(0);
+        
     }];
     
     [self addSubview:self.tableView];
     [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self->Title.mas_bottom).with.offset(20);
+        make.top.equalTo(self->menuNav.mas_bottom).with.offset(LENGTH(10));
         make.left.equalTo(ws).with.offset(0);
         make.right.equalTo(ws).with.offset(0);
         make.bottom.equalTo(ws).with.offset(0);
-        make.height.mas_equalTo(ws.tableView.contentSize.height);
+        make.height.mas_equalTo(1000);
     }];
+//    [_tableView reloadData];
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        NSArray * cellarray = [self cellsForTableView:ws.tableView];
+//        for (FoundHaoTJTableViewCell * cell in cellarray) {
+//            self->tableViewHeight = self->tableViewHeight + cell.frame.size.height;
+//        }
+//        [ws.tableView mas_updateConstraints:^(MASConstraintMaker *make) {
+//            make.height.mas_equalTo(self->tableViewHeight);
+//            
+//        }];
+//        
+//    });
+
+}
+
+- (void)setItemarray:(NSMutableArray *)itemarray{
+    _itemarray = itemarray;
+    [_tableView reloadData];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self layoutSubviews];
+    });
+//    WS(ws);
+//    CGFloat tableViewHeight = 0;
+//            NSArray * cellarray = [self cellsForTableView:ws.tableView];
+//            for (FoundHaoTJTableViewCell * cell in cellarray) {
+//                tableViewHeight = tableViewHeight + cell.frame.size.height;
+//            }
+//            [ws.tableView mas_updateConstraints:^(MASConstraintMaker *make) {
+//                make.height.mas_equalTo(tableViewHeight);
+//
+//            }];
+
 }
 - (UITableView *)tableView
 {
@@ -66,7 +103,7 @@
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 4;
+    return _itemarray.count;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
@@ -126,16 +163,14 @@
 - (void)layoutSubviews{
     [super layoutSubviews];
     WS(ws);
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        NSArray * cellarray = [self cellsForTableView:ws.tableView];
-        for (FoundHaoTJTableViewCell * cell in cellarray) {
-            self->tableViewHeight = self->tableViewHeight + cell.frame.size.height;
-        }
-        [ws.tableView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.height.mas_equalTo(self->tableViewHeight);
-            
-        }];
-    });
+        CGFloat tableViewHeight = 0;
+            NSArray * cellarray = [self cellsForTableView:ws.tableView];
+               for (FoundHaoTJTableViewCell * cell in cellarray) {
+                    tableViewHeight = tableViewHeight + cell.frame.size.height;
+                }
+            [ws.tableView mas_updateConstraints:^(MASConstraintMaker *make) {
+                    make.height.mas_equalTo(tableViewHeight);
+    
+                }];
 }
 @end

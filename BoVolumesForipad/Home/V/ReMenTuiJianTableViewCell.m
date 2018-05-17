@@ -13,7 +13,7 @@
     BaseLabel * Title;
     BaseLabel * subtitle;
     BaseLabel * fuwenben;
-    BaseView * downview;
+//    BaseView * downview;
     FLAnimatedImageView * RightImage;
     BaseButton * ComeOn;
 
@@ -29,38 +29,41 @@
 - (void)addview{
     leftImage = [FLAnimatedImageView new];
     leftImage.backgroundColor = RANDOMCOLOR;
-    leftImage.layer.borderWidth = 5;
-    leftImage.layer.borderColor = [UIColor blackColor].CGColor;
-    leftImage.layer.cornerRadius = 10;
-    leftImage.layer.masksToBounds = YES;
+//    leftImage.layer.borderWidth = 5;
+//    leftImage.layer.borderColor = [UIColor blackColor].CGColor;
+//    leftImage.layer.cornerRadius = 10;
+//    leftImage.layer.masksToBounds = YES;
     [self addSubview:leftImage];
     
-    Title = [[BaseLabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0) LabelTxteColor:LinShiZiTiYanSe LabelFont:TextFont(LinShiFont) TextAlignment:NSTextAlignmentLeft Text:ZHANWEIZI];
+    Title = [[BaseLabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0) LabelTxteColor:LinShiZiTiYanSe LabelFont:TextFont(Font17) TextAlignment:NSTextAlignmentLeft Text:ZHANWEIZI];
     [self addSubview:Title];
     
-    subtitle = [[BaseLabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0) LabelTxteColor:LinShiZiTiYanSe LabelFont:TextFont(LinShiFont) TextAlignment:NSTextAlignmentLeft Text:ZHANWEIZI];
+    _jKStarDisplayView = [[JKStarDisplayView alloc]initWithFrame:CGRectMake(0, 0, 0, 0)];
+    self.jKStarDisplayView.redValue = [@"4.3" floatValue];
+    [self addSubview:self.jKStarDisplayView];
+    
+    subtitle = [[BaseLabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0) LabelTxteColor:LinShiZiTiYanSe LabelFont:TextFont(Font15) TextAlignment:NSTextAlignmentLeft Text:ZHANWEIZI];
     [self addSubview:subtitle];
     
-    fuwenben = [[BaseLabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0) LabelTxteColor:LinShiZiTiYanSe LabelFont:TextFont(LinShiFont) TextAlignment:NSTextAlignmentLeft Text:ZHANWEIZI];
+    fuwenben = [[BaseLabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0) LabelTxteColor:LinShiZiTiYanSe LabelFont:TextFont(Font15) TextAlignment:NSTextAlignmentLeft Text:@"等级: 99 能力分支: 80"];
     [self addSubview:fuwenben];
     
-    downview = [BaseView new];
-    downview.backgroundColor = RANDOMCOLOR;
-    [self addSubview:downview];
     
 
     [self updata];
+    [self addYiDu];
+    [self addXunZhang];
+
+
 
 }
 - (void)setBookCase:(BookCaseStyle)bookCase{
     _bookCase = bookCase;
     switch (bookCase) {
         case BookCaseStyleWD:
-            [self addWeiDu];
             
             break;
         case BookCaseStyleYD:
-            [self addYiDu];
             break;
         case BookCaseStyleHomeWD:
             
@@ -80,10 +83,50 @@
     
     [RightImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(ws).with.offset(0);
-        make.right.equalTo(ws).with.offset(-LENGTH(50));
-        make.height.mas_equalTo(LENGTH(50));
-        make.width.mas_equalTo(LENGTH(50));
+        make.right.equalTo(ws).with.offset(-LENGTH(30));
+        make.height.mas_equalTo(LENGTH(37));
+        make.width.mas_equalTo(LENGTH(30));
         
+    }];
+}
+
+- (void)addXunZhang{
+    UIView * view = [UIView new];
+    view.backgroundColor = RANDOMCOLOR;
+    view.layer.cornerRadius = LENGTH(18);
+    view.layer.masksToBounds = YES;
+    [self addSubview:view];
+    
+    FLAnimatedImageView * imageView = [FLAnimatedImageView new];
+    imageView.backgroundColor = RANDOMCOLOR;
+    //    leftImage.layer.borderWidth = 5;
+    //    leftImage.layer.borderColor = [UIColor blackColor].CGColor;
+        imageView.layer.cornerRadius = LENGTH(13);
+        imageView.layer.masksToBounds = YES;
+    [view addSubview:imageView];
+    
+    BaseLabel * names = [[BaseLabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0) LabelTxteColor:LinShiZiTiYanSe LabelFont:TextFont(Font12) TextAlignment:NSTextAlignmentCenter Text:@"勋章名"];
+    [view addSubview:names];
+    
+    WS(ws);
+    [view mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self->fuwenben.mas_right).with.offset(LENGTH(44));
+        make.centerY.mas_equalTo(ws);
+        make.width.mas_equalTo(LENGTH(128));
+        make.height.mas_equalTo(LENGTH(36));
+    }];
+    
+    [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(view.mas_left).with.offset(LENGTH(18));
+        make.centerY.mas_equalTo(view.mas_centerY);
+        make.width.mas_equalTo(LENGTH(26));
+        make.height.mas_equalTo(LENGTH(26));
+    }];
+    
+    [names mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(imageView.mas_right).with.offset(LENGTH(0));
+        make.right.mas_equalTo(view.mas_right).with.offset(LENGTH(0));
+        make.centerY.mas_equalTo(view.mas_centerY);
     }];
 }
 - (void)addWeiDu{
@@ -110,40 +153,45 @@
 - (void)updata{
     WS(ws);
     [leftImage mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(ws).with.offset(12);
-        make.left.equalTo(ws).with.offset(LENGTH(50));
-        make.width.mas_equalTo(80);
-        make.height.mas_equalTo(120);
+        make.top.equalTo(ws).with.offset(LENGTH(27));
+        make.left.equalTo(ws).with.offset(LENGTH(24));
+        make.width.mas_equalTo(LENGTH(95));
+        make.height.mas_equalTo(LENGTH(133));
 //        make.height.equalTo(self->leftImage.mas_width).multipliedBy(1.5);
-        make.bottom.equalTo(ws).with.offset(-12);
+        make.bottom.equalTo(ws).with.offset(-LENGTH(26));
     }];
     
     [Title mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self->leftImage.mas_top).with.offset(0);
-        make.left.equalTo(self->leftImage.mas_right).with.offset(LENGTH(20));
+        make.top.equalTo(self->leftImage.mas_top).with.offset(LENGTH(7));
+        make.left.equalTo(self->leftImage.mas_right).with.offset(LENGTH(27));
         make.right.equalTo(ws).with.offset(-12);
     }];
+    
+    [_jKStarDisplayView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self->Title.mas_bottom).with.offset(LENGTH(15));
+        make.left.equalTo(self->leftImage.mas_right).with.offset(LENGTH(27));
+        make.width.mas_equalTo(LENGTH(80));
+        make.height.mas_equalTo(LENGTH(14));
+        //       make.right.equalTo(ws).with.offset(-12);
+    }];
+    
+
 
     [subtitle mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self->Title.mas_bottom).with.offset(20);
-        make.left.equalTo(self->leftImage.mas_right).with.offset(LENGTH(20));
-        make.right.equalTo(ws).with.offset(-12);
+        make.top.equalTo(ws.jKStarDisplayView.mas_bottom).with.offset(LENGTH(24));
+        make.left.equalTo(self->leftImage.mas_right).with.offset(LENGTH(27));
+        make.width.mas_equalTo(LENGTH(165));
     }];
 
     [fuwenben mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self->subtitle.mas_bottom).with.offset(20);
-        make.left.equalTo(self->leftImage.mas_right).with.offset(LENGTH(20));
-        make.right.equalTo(ws).with.offset(-12);
+        make.top.equalTo(self->subtitle.mas_bottom).with.offset(LENGTH(24));
+        make.left.equalTo(self->leftImage.mas_right).with.offset(LENGTH(27));
+        make.width.mas_equalTo(LENGTH(165));
+//        make.bottom.equalTo(self->leftImage.mas_bottom).with.offset(LENGTH(0));
+
     }];
 
-    [downview mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self->fuwenben.mas_bottom).with.offset(0);
-        make.left.equalTo(self->leftImage.mas_right).with.offset(LENGTH(20));
-        make.width.mas_equalTo(LENGTH(180));
-        make.bottom.equalTo(self->leftImage.mas_bottom).with.offset(LENGTH(0));
-        make.height.mas_equalTo(LENGTH(20));
-//       make.right.equalTo(ws).with.offset(-12);
-    }];
+
     
     
 }

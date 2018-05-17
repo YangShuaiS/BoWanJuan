@@ -31,15 +31,13 @@
     
     imageView = [FLAnimatedImageView new];
     imageView.backgroundColor = RANDOMCOLOR;
-    imageView.layer.cornerRadius = 10;
-    imageView.layer.masksToBounds = YES;
+
     [backView addSubview:imageView];
     
-    Title = [[BaseLabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0) LabelTxteColor:LinShiZiTiYanSe LabelFont:TextFont(LinShiFont) TextAlignment:NSTextAlignmentCenter Text:CHANGWENZI];
+    Title = [[BaseLabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0) LabelTxteColor:LinShiZiTiYanSe LabelFont:TextFont(Font15) TextAlignment:NSTextAlignmentCenter Text:CHANGWENZI];
     [backView addSubview:Title];
     
     touxiangview = [BaseView new];
-    touxiangview.backgroundColor = RANDOMCOLOR;
     [self.contentView addSubview:touxiangview];
     
     [backView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -50,30 +48,30 @@
     }];
     
     [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self->backView.mas_top).with.offset(12);
-        make.left.equalTo(self->backView.mas_left).with.offset(12);
-        make.right.equalTo(self->backView.mas_right).with.offset(-12);
-        make.height.mas_equalTo(self->imageView.mas_width);
+        make.top.equalTo(self->backView.mas_top).with.offset(0);
+        make.left.equalTo(self->backView.mas_left).with.offset(0);
+        make.right.equalTo(self->backView.mas_right).with.offset(0);
+        make.height.mas_equalTo(self->imageView.mas_width).multipliedBy(1.41);
     }];
     
     [Title mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self->imageView.mas_bottom).with.offset(20);
-        make.left.equalTo(self->backView.mas_left).with.offset(20);
-        make.right.equalTo(self->backView.mas_right).with.offset(-20);
+        make.top.equalTo(self->imageView.mas_bottom).with.offset(LENGTH(12));
+        make.left.equalTo(self->backView.mas_left).with.offset(0);
+        make.right.equalTo(self->backView.mas_right).with.offset(0);
     }];
     
     [touxiangview mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self->backView.mas_bottom).with.offset(-10);
+        make.bottom.equalTo(self->backView.mas_bottom).with.offset(0);
         make.centerX.mas_equalTo(ws);
 //        make.width.mas_equalTo(100);
-        make.height.mas_equalTo(20);
+        make.height.mas_equalTo(25);
 
     }];
     NSMutableArray * touxiangarray = [NSMutableArray array];
     for (int i = 0 ; i < 4; i++) {
         FLAnimatedImageView * touxiang = [FLAnimatedImageView new];
         touxiang.backgroundColor = RANDOMCOLOR;
-        touxiang.layer.cornerRadius = 10;
+        touxiang.layer.cornerRadius = LENGTH(25/2);
         touxiang.layer.masksToBounds = YES;
         [touxiangarray addObject:touxiang];
     }
@@ -88,15 +86,15 @@
                 make.bottom.equalTo(self->touxiangview.mas_bottom).with.offset(0);
                 //                make.top.equalTo(ws.view).with.offset(0);
                 make.left.equalTo(self->touxiangview.mas_left).with.offset(0);
-                make.width.mas_equalTo(20);
-                make.height.mas_equalTo(20);
+                make.width.mas_equalTo(LENGTH(25));
+                make.height.mas_equalTo(LENGTH(25));
             }];
         }else{
             [view mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.bottom.equalTo(self->touxiangview.mas_bottom).with.offset(0);
-                make.left.equalTo(lastTX.mas_right).with.offset(10);
-                make.width.mas_equalTo(20);
-                make.height.mas_equalTo(20);
+                make.left.equalTo(lastTX.mas_right).with.offset(LENGTH(10));
+                make.width.mas_equalTo(LENGTH(25));
+                make.height.mas_equalTo(LENGTH(25));
             }];
         }
         if (i == touxiangarray.count-1) {
@@ -111,7 +109,5 @@
 -  (void)color{
     backView.backgroundColor = RANDOMCOLOR;
     imageView.backgroundColor = RANDOMCOLOR;
-    touxiangview.backgroundColor = RANDOMCOLOR;
-
 }
 @end

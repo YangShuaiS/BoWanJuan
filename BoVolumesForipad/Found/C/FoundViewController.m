@@ -8,12 +8,17 @@
 
 #import "FoundViewController.h"
 #import "BanJiView.h"
+#import "FoundFriendView.h"
+
+
+
 #import "FoundHotXunZhang.h"
 #import "FoundXQXZ.h"
 #import "FoundDSDRB.h"
 #import "FoundHaoEnTuiJian.h"
 @interface FoundViewController ()<NavDelegate,UIScrollViewDelegate>{
     BanJiView * bjview;
+    FoundXQXZ * xqxq;
 }
 
 @end
@@ -25,7 +30,12 @@
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [bjview UpAnimal];
+    NSMutableArray * itemarray = [NSMutableArray array];
+    for (int i =0 ; i<3; i++) {
+        [itemarray addObject:@"123"];
+    }
+    xqxq.itemarray = itemarray;
+
 }
 
 - (void)viewDidLoad {
@@ -64,6 +74,10 @@
 
 #pragma mark -------------------- 所有底视图
 - (void)Addview{
+    NSMutableArray * itemarray = [NSMutableArray array];
+    for (int i =0 ; i<3; i++) {
+        [itemarray addObject:@"123"];
+    }
     scrollView = [UIScrollView new];
     scrollView.backgroundColor = BEIJINGCOLOR;
     scrollView.delegate = self;
@@ -75,16 +89,24 @@
     bjview = [BanJiView new];
     [viewarray addObject:bjview];
     
-    FoundHotXunZhang * xunzhang = [FoundHotXunZhang new];
-    [viewarray addObject:xunzhang];
+    FoundFriendView * foundfriend = [FoundFriendView new];
+    foundfriend.itemarray = itemarray;
+    [viewarray addObject:foundfriend];
     
-    FoundXQXZ * xqxq = [FoundXQXZ new];
-    [viewarray addObject:xqxq];
+    
+//    FoundHotXunZhang * xunzhang = [FoundHotXunZhang new];
+//    [viewarray addObject:xunzhang];
 
     FoundDSDRB * sdrb = [FoundDSDRB new];
+    sdrb.itemarray = itemarray;
     [viewarray addObject:sdrb];
     
+    xqxq = [FoundXQXZ new];
+    xqxq.itemarray = itemarray;
+    [viewarray addObject:xqxq];
+
     FoundHaoEnTuiJian * fpund = [FoundHaoEnTuiJian new];
+    fpund.itemarray = itemarray;
     [viewarray addObject:fpund];
     
 }
@@ -115,12 +137,12 @@
             [view mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(ws.view).with.offset(0);
                 make.right.equalTo(ws.view).with.offset(0);
-                make.top.equalTo(lastview.mas_bottom).with.offset(5);
+                make.top.equalTo(lastview.mas_bottom).with.offset(LENGTH(10));
             }];
         }
         if (i == viewarray.count-1) {
             [view mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.bottom.equalTo(self->scrollView.mas_bottom).with.offset(-100);
+                make.bottom.equalTo(self->scrollView.mas_bottom).with.offset(-10);
             }];
         }
         lastview = view;

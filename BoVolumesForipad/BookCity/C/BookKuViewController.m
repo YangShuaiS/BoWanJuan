@@ -36,7 +36,7 @@
             make.top.equalTo(ws.view).with.offset(NavHeight);
             make.left.equalTo(ws.view).with.offset(0);
             make.right.equalTo(ws.view).with.offset(0);
-            make.height.mas_equalTo(self->headView.mas_width).multipliedBy(0.267);
+            make.height.mas_equalTo(LENGTH(224));
         }];
 //    [headView mas_makeConstraints:^(MASConstraintMaker *make) {
 //        make.top.equalTo(ws.tableView.tableHeaderView.mas_top).with.offset(0);
@@ -66,7 +66,7 @@
 - (void)AddNavtion{
     [super AddNavtion];
     WS(ws);
-    self.navtive = [[NativeView alloc] initWithLeftImage:@"home-Click" Title:@"收缩" RightTitle:@"" NativeStyle:NacStyleBookCity];
+    self.navtive = [[NativeView alloc] initWithLeftImage:@"home-Click" Title:@"搜索" RightTitle:@"" NativeStyle:NacStyleBookCity];
     self.navtive.delegate = self;
     [self.view addSubview:self.navtive];
     [ws.navtive mas_makeConstraints:^(MASConstraintMaker *make) {

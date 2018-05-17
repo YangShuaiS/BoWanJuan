@@ -41,6 +41,12 @@ typedef NS_ENUM(NSInteger, BookReadingStyle) {
     BookIntensiveReading = 0,//精读
     BookExtensiveReading = 1, //泛读
 };
+
+#pragma mark -------------- 菜单栏是否加更多
+typedef NS_ENUM(NSInteger, MenuNavStyle) {
+    MenuNavStyleTitle = 0,//只蚊子
+    MenuNavStyleTitleAndMore = 1, //更多
+};
 @interface BaseENUM : NSObject
 
 @end

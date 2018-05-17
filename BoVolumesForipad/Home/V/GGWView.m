@@ -22,16 +22,16 @@
 -(void)setupUI{
     backView = [BaseView new];
     backView.backgroundColor = RANDOMCOLOR;
-    backView.layer.cornerRadius = 10;
+    backView.layer.cornerRadius = LENGTH(5);
     backView.layer.masksToBounds = YES;
     [self addSubview:backView];
     
     WS(ws);
     [backView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(ws).with.offset(12);
-        make.top.equalTo(ws).with.offset(12);
-        make.right.equalTo(ws).with.offset(-12);
-        make.bottom.equalTo(ws).with.offset(-12);
+        make.left.equalTo(ws).with.offset(LENGTH(60));
+        make.top.equalTo(ws).with.offset(LENGTH(10));
+        make.right.equalTo(ws).with.offset(-LENGTH(60));
+        make.bottom.equalTo(ws).with.offset(-LENGTH(0));
         make.height.mas_equalTo(self->backView.mas_width).multipliedBy(0.421);
     }];
 }

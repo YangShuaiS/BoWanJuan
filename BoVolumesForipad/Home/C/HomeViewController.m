@@ -9,6 +9,7 @@
 #import "HomeViewController.h"
 #import "FenLeiView.h"
 #import "HanJIaZuoYe.h"
+#import "ShiDuView.h"
 #import "XingQuXiaoZu.h"
 #import "XinZengXunZhang.h"
 #import "ZhiZiLvView.h"
@@ -31,10 +32,11 @@
     UIScrollView * scrollView;
 
     BaseView * topview ;//首页头像部分是图
-    BaseView * XunZhangView;//勋章视图
+//    BaseView * XunZhangView;//勋章视图
     BaseView * lunbotu;//轮播图
     FenLeiView * fenlei;//分类
     HanJIaZuoYe * hanjiazuoye;//寒假左右
+    ShiDuView * shidu;//适读
     XingQuXiaoZu * xingquxiaozu;//兴趣小组
     XinZengXunZhang * xinZengXunZhang;//新增勋章
     ZhiZiLvView * zhizilv;//shizilv
@@ -63,6 +65,8 @@
 }
 #pragma mark -------------------- 所有底视图
 - (void)Addview{
+    NSMutableArray * arr = [NSMutableArray array];
+    
     scrollView = [UIScrollView new];
     scrollView.backgroundColor = BEIJINGCOLOR;
     scrollView.delegate = self;
@@ -73,11 +77,13 @@
     //头像视图
     topview = [BaseView new];
     topview.backgroundColor = MAINCOLOR;
-    [viewarray addObject:topview];
-    //勋章视图
-    XunZhangView = [BaseView new];
-    XunZhangView.backgroundColor = RANDOMCOLOR;
-    [viewarray addObject:XunZhangView];
+    [self.view addSubview:topview];
+
+//    [viewarray addObject:topview];
+//    //勋章视图
+//    XunZhangView = [BaseView new];
+//    XunZhangView.backgroundColor = RANDOMCOLOR;
+//    [viewarray addObject:XunZhangView];
     //轮播图
     lunbotu = [BaseView new];
     lunbotu.backgroundColor = RANDOMCOLOR;
@@ -90,15 +96,23 @@
     hanjiazuoye = [HanJIaZuoYe new];
     hanjiazuoye.backgroundColor = BEIJINGCOLOR;
     [viewarray addObject:hanjiazuoye];
+    //适读
+    shidu = [ShiDuView new];
+//    shidu.backgroundColor = RANDOMCOLOR;
+    [viewarray addObject:shidu];
+    
+    //新增勋章
+    xinZengXunZhang = [XinZengXunZhang new];
+    xinZengXunZhang.backgroundColor = BEIJINGCOLOR;
+    xinZengXunZhang.itemarray = arr;
+    [viewarray addObject:xinZengXunZhang];
+    
     //兴趣小组
     xingquxiaozu = [XingQuXiaoZu new];
     xingquxiaozu.backgroundColor = BEIJINGCOLOR;
     xingquxiaozu.delegate = self;
     [viewarray addObject:xingquxiaozu];
-    //新增勋章
-    xinZengXunZhang = [XinZengXunZhang new];
-    xinZengXunZhang.backgroundColor = BEIJINGCOLOR;
-    [viewarray addObject:xinZengXunZhang];
+
     //识字率
     zhizilv = [ZhiZiLvView new];
 //    xinZengXunZhang.backgroundColor = BEIJINGCOLOR;
@@ -107,23 +121,27 @@
     haoyouzaidu = [HaoYouZaiDu new];
     haoyouzaidu.backgroundColor = BEIJINGCOLOR;
     [viewarray addObject:haoyouzaidu];
-    //GGWView广告位？
-    ggv = [GGWView new];
-    [viewarray addObject:ggv];
-    //热门推荐
-    rmtj = [ReMenTuiJian new];
-    [viewarray addObject:rmtj];
+//    //GGWView广告位？
+//    ggv = [GGWView new];
+//    [viewarray addObject:ggv];
+//    //热门推荐
+//    rmtj = [ReMenTuiJian new];
+//    [viewarray addObject:rmtj];
     
 }
 #pragma mark -------------------- 视图布局
 - (void)ViewLaout{
     WS(ws);
-    [scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [topview mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(ws.view).with.offset(0);
         make.left.equalTo(ws.view).with.offset(0);
         make.right.equalTo(ws.view).with.offset(0);
+    }];
+    [scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self->topview.mas_bottom).with.offset(0);
+        make.left.equalTo(ws.view).with.offset(0);
+        make.right.equalTo(ws.view).with.offset(0);
         make.bottom.equalTo(ws.view).with.offset(0);
-        
     }];
     BaseView * lastview;
     for (int i = 0; i < viewarray.count; i++) {
@@ -133,7 +151,7 @@
             [view mas_makeConstraints:^(MASConstraintMaker *make) {
 //                make.left.equalTo(self->scrollView.mas_left).with.offset(0);
 //                make.right.equalTo(self->scrollView.mas_right).with.offset(0);
-                make.top.equalTo(self->scrollView.mas_top).with.offset(-20);
+                make.top.equalTo(self->scrollView.mas_top).with.offset(0);
 //                make.top.equalTo(ws.view).with.offset(0);
                 make.left.equalTo(ws.view).with.offset(0);
                 make.right.equalTo(ws.view).with.offset(0);
@@ -147,7 +165,7 @@
         }
         if (i == viewarray.count-1) {
             [view mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.bottom.equalTo(self->scrollView.mas_bottom).with.offset(-100);
+                make.bottom.equalTo(self->scrollView.mas_bottom).with.offset(-10);
             }];
         }
         lastview = view;
@@ -165,20 +183,19 @@
     [erweimabutton addTarget:self action:@selector(erweima) forControlEvents:UIControlEventTouchUpInside];
     [topview addSubview:erweimabutton];
     //右面 ？？？？？？？？
-    FLAnimatedImageView * right = [FLAnimatedImageView new];
-    right.backgroundColor = RANDOMCOLOR;
-    [topview addSubview:right];
+//    FLAnimatedImageView * right = [FLAnimatedImageView new];
+//    right.backgroundColor = RANDOMCOLOR;
+//    [topview addSubview:right];
     //右面 ？？？？？？？？点击事件
-    BaseButton * rightbutton = [BaseButton buttonWithType:UIButtonTypeCustom];
-    [rightbutton addTarget:self action:@selector(rightbutton) forControlEvents:UIControlEventTouchUpInside];
-    [topview addSubview:rightbutton];
+//    BaseButton * rightbutton = [BaseButton buttonWithType:UIButtonTypeCustom];
+//    [rightbutton addTarget:self action:@selector(rightbutton) forControlEvents:UIControlEventTouchUpInside];
+//    [topview addSubview:rightbutton];
     //title
-    BaseLabel * title = [[BaseLabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0) LabelTxteColor:LinShiZiTiYanSe LabelFont:TextFont(LinShiFont) TextAlignment:NSTextAlignmentCenter Text:@"首页"];
-    [topview addSubview:title];
+
     //头像
     FLAnimatedImageView * touxiang = [FLAnimatedImageView new];
     touxiang.backgroundColor = RANDOMCOLOR;
-    touxiang.layer.cornerRadius = 30;
+    touxiang.layer.cornerRadius = LENGTH(31);
     touxiang.layer.masksToBounds = YES;
     [topview addSubview:touxiang];
     //头像点击事件
@@ -186,17 +203,17 @@
     [touxiangbutton addTarget:self action:@selector(touxiangbutton) forControlEvents:UIControlEventTouchUpInside];
     [topview addSubview:touxiangbutton];
     //名称
-    BaseLabel * name = [[BaseLabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0) LabelTxteColor:LinShiZiTiYanSe LabelFont:TextFont(LinShiFont) TextAlignment:NSTextAlignmentCenter Text:ZHANWEIZI];
+    BaseLabel * name = [[BaseLabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0) LabelTxteColor:LinShiZiTiYanSe LabelFont:TextFont(Font16) TextAlignment:NSTextAlignmentCenter Text:ZHANWEIZI];
     [topview addSubview:name];
     //等级
-    BaseLabel * dengji = [[BaseLabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0) LabelTxteColor:LinShiZiTiYanSe LabelFont:TextFont(LinShiFont) TextAlignment:NSTextAlignmentCenter Text:ZHANWEIZI];
+    BaseLabel * dengji = [[BaseLabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0) LabelTxteColor:LinShiZiTiYanSe LabelFont:TextFont(Font16) TextAlignment:NSTextAlignmentCenter Text:ZHANWEIZI];
     [topview addSubview:dengji];
     
     [erweima mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self->topview.mas_left).with.offset(12);
-        make.top.equalTo(self->topview.mas_top).with.offset(StatusBar+12);
-        make.height.mas_offset(20);
-        make.width.mas_offset(20);
+        make.left.equalTo(self->topview.mas_left).with.offset(LENGTH(14));
+        make.top.equalTo(self->topview.mas_top).with.offset(StatusBar+LENGTH(17));
+        make.height.mas_offset(LENGTH(40));
+        make.width.mas_offset(LENGTH(40));
     }];
     
     [erweimabutton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -206,87 +223,54 @@
         make.width.mas_offset(50);
     }];
     
-    [right mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self->topview.mas_right).with.offset(-12);
-        make.top.equalTo(self->topview.mas_top).with.offset(StatusBar+12);
-        make.height.mas_offset(20);
-        make.width.mas_offset(20);
-    }];
+//    [right mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.right.equalTo(self->topview.mas_right).with.offset(-12);
+//        make.top.equalTo(self->topview.mas_top).with.offset(StatusBar+12);
+//        make.height.mas_offset(20);
+//        make.width.mas_offset(20);
+//    }];
     
-    [rightbutton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self->topview.mas_right).with.offset(0);
-        make.top.equalTo(self->topview.mas_top).with.offset(StatusBar);
-        make.height.mas_offset(50);
-        make.width.mas_offset(50);
-    }];
+//    [rightbutton mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.right.equalTo(self->topview.mas_right).with.offset(0);
+//        make.top.equalTo(self->topview.mas_top).with.offset(StatusBar);
+//        make.height.mas_offset(50);
+//        make.width.mas_offset(50);
+//    }];
     
-    [title mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self->topview.mas_left).with.offset(100);
-        make.right.equalTo(self->topview.mas_right).with.offset(-100);
-        make.top.equalTo(self->topview.mas_top).with.offset(StatusBar+12);
-    }];
+
     
     [touxiang mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self->topview.mas_centerX);
-        make.top.equalTo(title.mas_bottom).with.offset(30);
-        make.height.mas_offset(60);
-        make.width.mas_offset(60);
+        make.top.equalTo(self->topview.mas_top).with.offset(LENGTH(56)+StatusBar);
+        make.left.equalTo(self->topview.mas_left).with.offset(LENGTH(86));
+        make.height.mas_offset(LENGTH(62));
+        make.width.mas_offset(LENGTH(62));
     }];
     
     [touxiangbutton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self->topview.mas_centerX);
-        make.top.equalTo(title.mas_bottom).with.offset(10);
-        make.height.mas_offset(100);
-        make.width.mas_offset(100);
+        make.edges.mas_equalTo(touxiang);
+
     }];
     
     [name mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self->topview.mas_centerX);
-        make.top.equalTo(touxiang.mas_bottom).with.offset(10);
-        make.width.mas_offset(100);
+        make.left.equalTo(touxiang.mas_right).with.offset(LENGTH(24));
+        make.top.equalTo(touxiang.mas_top).with.offset(LENGTH(11));
     }];
     
     [dengji mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self->topview.mas_centerX);
-        make.top.equalTo(name.mas_bottom).with.offset(10);
-        make.bottom.equalTo(self->topview.mas_bottom).with.offset(-10);
-        make.width.mas_offset(100);
+        make.top.equalTo(name.mas_bottom).with.offset(LENGTH(14));
+        make.left.equalTo(touxiang.mas_right).with.offset(LENGTH(24));
+        make.bottom.equalTo(self->topview.mas_bottom).with.offset(-LENGTH(31));
+
     }];
 
     
-}
-#pragma  mark --------------------- top视图点击事件
-//二维码
-- (void)erweima{
-    WCQRCodeScanningVC *WCVC = [[WCQRCodeScanningVC alloc] init];
-    [self QRCodeScanVC:WCVC];
-}
-
-//右边
-- (void)rightbutton{
-    BookCityViewController * book = [BookCityViewController new];
-    [self.navigationController pushViewController:book animated:YES];
-}
-//头像
-- (void)touxiangbutton{
-    self.tabBarController.selectedIndex = 3;
-}
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-#pragma mark --------------------- 勋章视图
-- (void)AddXunZhangView{
     BaseView * leftview = [BaseView new];
     leftview.backgroundColor = RANDOMCOLOR;
-    [XunZhangView addSubview:leftview];
-    BaseView * shuxianview = [BaseView new];
-    shuxianview.backgroundColor = RANDOMCOLOR;
-    [XunZhangView addSubview:shuxianview];
+    [topview addSubview:leftview];
+
     BaseView * rightview = [BaseView new];
     rightview.backgroundColor = RANDOMCOLOR;
-    [XunZhangView addSubview:rightview];
+    [topview addSubview:rightview];
     
     BaseButton * xunzhangbutton = [BaseButton buttonWithType:UIButtonTypeCustom];
     [xunzhangbutton addTarget:self action:@selector(xunzhangbutton) forControlEvents:UIControlEventTouchUpInside];
@@ -312,61 +296,80 @@
     ringimageview.backgroundColor = RANDOMCOLOR;
     [rightview addSubview:ringimageview];
     
-    [leftview mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self->XunZhangView.mas_left).with.offset(0);
-        make.right.equalTo(rightview.mas_left).with.offset(0);
-        make.top.equalTo(self->XunZhangView.mas_top).with.offset(0);
-        make.bottom.equalTo(self->XunZhangView.mas_bottom).with.offset(0);
-        make.width.mas_equalTo(rightview);
-    }];
-    
     [rightview mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self->XunZhangView.mas_right).with.offset(0);
-        make.left.equalTo(leftview.mas_right).with.offset(0);
-        make.top.equalTo(self->XunZhangView.mas_top).with.offset(0);
-        make.bottom.equalTo(self->XunZhangView.mas_bottom).with.offset(0);
-    }];
-    
-    [shuxianview mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.mas_equalTo(self->XunZhangView.mas_centerX);
-        make.top.equalTo(self->XunZhangView.mas_top).with.offset(10);
-        make.bottom.equalTo(self->XunZhangView.mas_bottom).with.offset(-10);
-        make.width.mas_equalTo(5);
-    }];
+        make.left.equalTo(leftview.mas_right).with.offset(LENGTH(22));
+        make.right.equalTo(self->topview.mas_right).with.offset(-LENGTH(28));
+        make.bottom.equalTo(self->topview.mas_bottom).with.offset(-LENGTH(20));
+        make.width.mas_equalTo(LENGTH(135));
+        make.height.mas_equalTo(LENGTH(62));
 
-    [leftname mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.mas_equalTo(leftview.mas_centerX);
-        make.top.equalTo(leftview.mas_top).with.offset(10);
     }];
+    [leftview mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(rightview.mas_left).with.offset(-LENGTH(22));
+        make.bottom.equalTo(self->topview.mas_bottom).with.offset(-LENGTH(20));
+        make.width.mas_equalTo(LENGTH(135));
+        make.height.mas_equalTo(LENGTH(62));
+    }];
+    
+//    [leftname mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerX.mas_equalTo(leftview.mas_centerX);
+//        make.top.equalTo(leftview.mas_top).with.offset(10);
+//    }];
+//    
+//    [rightname mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerX.mas_equalTo(rightview.mas_centerX);
+//        make.top.equalTo(rightview.mas_top).with.offset(10);
+//    }];
+//
+//    [leftimageview mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerX.mas_equalTo(leftview.mas_centerX);
+//        make.top.equalTo(leftname.mas_bottom).with.offset(5);
+//        make.bottom.equalTo(leftview.mas_bottom).with.offset(-10);
+//        make.width.mas_equalTo(100);
+//        make.height.mas_equalTo(30);
+//    }];
+//
+//    [ringimageview mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerX.mas_equalTo(rightview.mas_centerX);
+//        make.top.equalTo(rightview.mas_bottom).with.offset(5);
+//        make.bottom.equalTo(rightview.mas_bottom).with.offset(-10);
+//        make.width.mas_equalTo(100);
+//        make.height.mas_equalTo(30);
+//    }];
 
-    [rightname mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.mas_equalTo(rightview.mas_centerX);
-        make.top.equalTo(rightview.mas_top).with.offset(10);
-    }];
-    
-    [leftimageview mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.mas_equalTo(leftview.mas_centerX);
-        make.top.equalTo(leftname.mas_bottom).with.offset(5);
-        make.bottom.equalTo(leftview.mas_bottom).with.offset(-10);
-        make.width.mas_equalTo(100);
-        make.height.mas_equalTo(30);
-    }];
-    
-    [ringimageview mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.mas_equalTo(rightview.mas_centerX);
-        make.top.equalTo(rightview.mas_bottom).with.offset(5);
-        make.bottom.equalTo(rightview.mas_bottom).with.offset(-10);
-        make.width.mas_equalTo(100);
-        make.height.mas_equalTo(30);
-    }];
-    
     [xunzhangbutton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(leftview);
     }];
-    
+
     [lichengbeibutton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(rightview);
     }];
+    
+}
+#pragma  mark --------------------- top视图点击事件
+//二维码
+- (void)erweima{
+    WCQRCodeScanningVC *WCVC = [[WCQRCodeScanningVC alloc] init];
+    [self QRCodeScanVC:WCVC];
+}
+
+////右边
+//- (void)rightbutton{
+//    BookCityViewController * book = [BookCityViewController new];
+//    [self.navigationController pushViewController:book animated:YES];
+//}
+//头像
+- (void)touxiangbutton{
+    self.tabBarController.selectedIndex = 3;
+}
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark --------------------- 勋章视图
+- (void)AddXunZhangView{
+   
 }
 #pragma mark --------------------- 勋章视图点击事件
 - (void)xunzhangbutton{
@@ -397,11 +400,11 @@
     [lunbotu addSubview:cycleScrollerView];
     
     [cycleScrollerView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self->lunbotu.mas_right).with.offset(-12);
-        make.left.equalTo(self->lunbotu.mas_left).with.offset(12);
-        make.top.equalTo(self->lunbotu.mas_top).with.offset(12);
-        make.bottom.equalTo(self->lunbotu.mas_bottom).with.offset(-12);
-        make.height.equalTo(self->lunbotu.mas_width).multipliedBy(0.4);
+        make.right.equalTo(self->lunbotu.mas_right).with.offset(0);
+        make.left.equalTo(self->lunbotu.mas_left).with.offset(0);
+        make.top.equalTo(self->lunbotu.mas_top).with.offset(0);
+        make.bottom.equalTo(self->lunbotu.mas_bottom).with.offset(0);
+        make.height.equalTo(self->lunbotu.mas_width).multipliedBy(0.26953125);
     }];
 
 }

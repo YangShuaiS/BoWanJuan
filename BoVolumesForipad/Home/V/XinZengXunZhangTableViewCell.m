@@ -13,7 +13,6 @@
     BaseLabel * Title;
     BaseLabel * Time;
     BaseLabel * SubTitle;
-    BaseView * huo;
     FLAnimatedImageView * xunzhang;
     BaseLabel * xunzhangshu;
     FLAnimatedImageView * rentou;
@@ -29,22 +28,20 @@
     return self;
 }
 - (void)addview{
+    self.backgroundColor = [UIColor clearColor];
     leftImage = [FLAnimatedImageView new];
     leftImage.backgroundColor = RANDOMCOLOR;
     [self addSubview:leftImage];
     
-    Title = [[BaseLabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0) LabelTxteColor:LinShiZiTiYanSe LabelFont:TextFont(LinShiFont) TextAlignment:NSTextAlignmentLeft Text:ZHANWEIZI];
+    Title = [[BaseLabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0) LabelTxteColor:LinShiZiTiYanSe LabelFont:TextFont(Font17) TextAlignment:NSTextAlignmentLeft Text:ZHANWEIZI];
     [self addSubview:Title];
     
-    Time = [[BaseLabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0) LabelTxteColor:LinShiZiTiYanSe LabelFont:TextFont(LinShiFont) TextAlignment:NSTextAlignmentLeft Text:ZHANWEIZI];
+    Time = [[BaseLabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0) LabelTxteColor:LinShiZiTiYanSe LabelFont:TextFont(Font17) TextAlignment:NSTextAlignmentLeft Text:@""];
     [self addSubview:Time];
     
-    SubTitle = [[BaseLabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0) LabelTxteColor:LinShiZiTiYanSe LabelFont:TextFont(LinShiFont) TextAlignment:NSTextAlignmentLeft Text:CHANGWENZI];
+    SubTitle = [[BaseLabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0) LabelTxteColor:LinShiZiTiYanSe LabelFont:TextFont(Font15) TextAlignment:NSTextAlignmentLeft Text:CHANGWENZI];
     [self addSubview:SubTitle];
     
-    huo = [BaseView new];
-    huo.backgroundColor = RANDOMCOLOR;
-    [self addSubview:huo];
     
     xunzhang = [FLAnimatedImageView new];
     xunzhang.backgroundColor = RANDOMCOLOR;
@@ -54,10 +51,10 @@
     rentou.backgroundColor = RANDOMCOLOR;
     [self addSubview:rentou];
     
-    xunzhangshu = [[BaseLabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0) LabelTxteColor:LinShiZiTiYanSe LabelFont:TextFont(LinShiFont) TextAlignment:NSTextAlignmentLeft Text:CHANGWENZI];
+    xunzhangshu = [[BaseLabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0) LabelTxteColor:LinShiZiTiYanSe LabelFont:TextFont(12) TextAlignment:NSTextAlignmentLeft Text:CHANGWENZI];
     [self addSubview:xunzhangshu];
     
-    rentoushu = [[BaseLabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0) LabelTxteColor:LinShiZiTiYanSe LabelFont:TextFont(LinShiFont) TextAlignment:NSTextAlignmentLeft Text:CHANGWENZI];
+    rentoushu = [[BaseLabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0) LabelTxteColor:LinShiZiTiYanSe LabelFont:TextFont(12) TextAlignment:NSTextAlignmentLeft Text:CHANGWENZI];
     [self addSubview:rentoushu];
     [self updata];
 }
@@ -65,62 +62,53 @@
 - (void)updata{
     WS(ws);
     [leftImage mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(ws).with.offset(12);
-        make.left.equalTo(ws).with.offset(12);
-//        make.height.mas_equalTo(150);
-        make.width.mas_equalTo(LENGTH(250));
-        make.height.equalTo(self->leftImage.mas_width).multipliedBy(0.56);
+        make.top.equalTo(ws).with.offset(LENGTH(15));
+        make.left.equalTo(ws).with.offset(LENGTH(26));
+        make.width.mas_equalTo(LENGTH(150));
+        make.height.equalTo(self->leftImage.mas_width).multipliedBy(0.666);
 
     }];
     
     [Title mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self->leftImage.mas_top).with.offset(12);
-        make.left.equalTo(self->leftImage.mas_right).with.offset(12);
-        make.right.equalTo(self->Time.mas_left).with.offset(-12);
+        make.top.equalTo(self->leftImage.mas_top).with.offset(LENGTH(5));
+        make.left.equalTo(self->leftImage.mas_right).with.offset(LENGTH(21));
+//        make.right.equalTo(self->Time.mas_left).with.offset(-LENGTH(12));
     }];
     
     [Time mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(ws).with.offset(12);
-        make.left.equalTo(self->Title.mas_right).with.offset(12);
-        make.right.equalTo(ws).with.offset(-20);
+        make.centerY.mas_equalTo(self->Title.mas_centerY);
+        make.right.equalTo(ws).with.offset(-LENGTH(25));
     }];
     
     [SubTitle mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self->Title.mas_bottom).with.offset(12);
-        make.left.equalTo(self->leftImage.mas_right).with.offset(12);
-        make.right.equalTo(ws).with.offset(-12);
-    }];
-    
-    [huo mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self->SubTitle.mas_bottom).with.offset(12);
-        make.left.equalTo(self->leftImage.mas_right).with.offset(12);
-        make.height.mas_equalTo(20);
-        make.width.mas_equalTo(200);
+        make.top.equalTo(self->Title.mas_bottom).with.offset(LENGTH(21));
+        make.left.equalTo(self->leftImage.mas_right).with.offset(LENGTH(21));
+        make.right.equalTo(ws).with.offset(-LENGTH(25));
     }];
     
     [xunzhang mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self->huo.mas_bottom).with.offset(12);
-        make.left.equalTo(self->leftImage.mas_right).with.offset(12);
+        make.top.equalTo(self->SubTitle.mas_bottom).with.offset(LENGTH(24));
+        make.left.equalTo(self->leftImage.mas_right).with.offset(LENGTH(21));
         make.height.mas_equalTo(20);
         make.width.mas_equalTo(20);
     }];
     
     [xunzhangshu mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self->huo.mas_bottom).with.offset(12);
-        make.left.equalTo(self->xunzhang.mas_right).with.offset(6);
+        make.centerY.mas_equalTo(self->xunzhang.mas_centerY);
+        make.left.equalTo(self->xunzhang.mas_right).with.offset(LENGTH(12));
         make.width.mas_equalTo(50);
     }];
     
     [rentou mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self->huo.mas_bottom).with.offset(12);
-        make.left.equalTo(self->xunzhangshu.mas_right).with.offset(12);
+        make.centerY.mas_equalTo(self->xunzhang.mas_centerY);
+        make.left.equalTo(self->xunzhangshu.mas_right).with.offset(LENGTH(12));
         make.height.mas_equalTo(20);
         make.width.mas_equalTo(20);
     }];
     
     [rentoushu mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self->huo.mas_bottom).with.offset(12);
-        make.left.equalTo(self->rentou.mas_right).with.offset(6);
+        make.centerY.mas_equalTo(self->xunzhang.mas_centerY);
+        make.left.equalTo(self->rentou.mas_right).with.offset(LENGTH(12));
         make.width.mas_equalTo(50);
 //        make.bottom.equalTo(ws).with.offset(-20);
     }];
@@ -139,12 +127,14 @@
         }
         //        [self layoutSubviews];
     }}
-- (void)layoutSubviews{
-    [super layoutSubviews];
 
-}
-- (void)layoutIfNeeded{
-    [super layoutIfNeeded];
+
+- (void)setItemarray:(NSMutableArray *)itemarray{
+    _itemarray = itemarray;
+    int a = 10;
+    //
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"剩余%d天",a]];
+    Time.attributedText = attributedString;
 }
 - (void)awakeFromNib {
     [super awakeFromNib];

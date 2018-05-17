@@ -9,5 +9,4 @@
 #import "BaseView.h"
 
 @interface BanJiView : BaseView<UIScrollViewDelegate>
-- (void)UpAnimal;
 @end

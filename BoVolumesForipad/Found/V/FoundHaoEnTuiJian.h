@@ -9,5 +9,6 @@
 #import "BaseView.h"
 
 @interface FoundHaoEnTuiJian : BaseView
+@property (nonatomic, strong) NSMutableArray* itemarray;
 
 @end

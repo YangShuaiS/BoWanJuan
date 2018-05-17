@@ -18,7 +18,7 @@
 }
 -(void)setupUI{
     WS(ws);
-    self.backgroundColor = RGB(225, 233, 233);
+    self.backgroundColor = RGB(230, 230, 230);
     BaseView * oneView = [BaseView new];
     [self addSubview:oneView];
     
@@ -64,22 +64,22 @@
         make.bottom.equalTo(ws).with.offset(0);
         make.right.equalTo(ws).with.offset(0);
     }];
-    BaseLabel * ydfj = [[BaseLabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0) LabelTxteColor:LinShiZiTiYanSe LabelFont:TextFont(LinShiFont) TextAlignment:NSTextAlignmentLeft Text:ZHANWEIZI];
-    [oneView addSubview:ydfj];
+    BaseLabel * ydfj = [[BaseLabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0) LabelTxteColor:LinShiZiTiYanSe LabelFont:TextFont(Font17) TextAlignment:NSTextAlignmentLeft Text:@"阅读分级"];
+    [centerView addSubview:ydfj];
 
     [ydfj mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.center.mas_equalTo(oneView);
+        make.center.mas_equalTo(centerView);
     }];
 
-    BaseLabel * sjlx = [[BaseLabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0) LabelTxteColor:LinShiZiTiYanSe LabelFont:TextFont(LinShiFont) TextAlignment:NSTextAlignmentLeft Text:ZHANWEIZI];
-    [centerView addSubview:sjlx];
+    BaseLabel * sjlx = [[BaseLabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0) LabelTxteColor:LinShiZiTiYanSe LabelFont:TextFont(Font17) TextAlignment:NSTextAlignmentLeft Text:@"书籍类型"];
+    [oneView addSubview:sjlx];
 
     [sjlx mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.center.mas_equalTo(centerView);
+        make.center.mas_equalTo(oneView);
 
     }];
 
-    BaseLabel * mrpx = [[BaseLabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0) LabelTxteColor:LinShiZiTiYanSe LabelFont:TextFont(LinShiFont) TextAlignment:NSTextAlignmentLeft Text:ZHANWEIZI];
+    BaseLabel * mrpx = [[BaseLabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0) LabelTxteColor:LinShiZiTiYanSe LabelFont:TextFont(Font17) TextAlignment:NSTextAlignmentLeft Text:@"默认排序"];
     [self addSubview:mrpx];
 
     [mrpx mas_makeConstraints:^(MASConstraintMaker *make) {

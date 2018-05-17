@@ -13,7 +13,7 @@
 #define KIsiPhoneX ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) : NO)
 #define LENGTH(x)       (x*([UIScreen mainScreen].bounds.size.width/768.0))
 #define XIANGSU(x) (x*[UIScreen mainScreen].scale)
-#define MENU  LENGTH(60)
+#define MENU  LENGTH(54)
 
 #define kUserDefaults [NSUserDefaults standardUserDefaults]
 #define WS(weakSelf)  __weak __typeof(&*self)weakSelf = self;
@@ -46,7 +46,7 @@
 #define kNotificationDenglu        @"kNotificationDenglu"
 
 //字体大小
-#define TextFont(f) [UIFont systemFontOfSize:FontSize(f)]
+#define TextFont(f) [UIFont systemFontOfSize:FontSize(LENGTH(f))]
 //跟视图数量
 #define ChildViewControllersCount self.navigationController.childViewControllers.count
 //plist文件
@@ -86,4 +86,17 @@
 #define ZHANWEIZI @"我是占位字"
 #define CHANGWENZI @"我是长文字我是长文字我是长文字我是长文字我是长文字我是长文字我是长文字我是长文字我是长文字我是长文字我是长文字我是长文字我是长文字我是长文字我是长文字我是长文字我是长文字我是长文字我是长文字我是长文字我是长文字我是长文字我是长文字我是长文字我是长文字我是长文字我是长文字我是长文字我是长文字我是长文字我是长文字我是长文字我是长文字我是长文字我是长文字"
 
+#define Font20 20
+#define Font18 18
+#define Font17 17
+#define Font16 16
+#define Font15 15
+#define Font14 14
+#define Font13 13
+#define Font12 12
+#define Font11 11
+
+
+
+#define backColor [UIColor colorWithRed:255/255.0f green:255/255.0f blue:255/255.0f alpha:1] 
 #endif /* Public_h */

@@ -9,4 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface XinZengXunZhangTableViewCell : UITableViewCell
+@property (nonatomic, strong) NSMutableArray* itemarray;
+
 @end

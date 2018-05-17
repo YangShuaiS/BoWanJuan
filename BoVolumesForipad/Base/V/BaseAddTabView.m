@@ -16,7 +16,7 @@
 {
     if (!_tableView) {
         _tableView = [[BaseTableView alloc] init];
-        _tableView.separatorStyle = UITableViewStyleGrouped;
+        _tableView.separatorStyle = UITableViewStylePlain;
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.backgroundColor = RGB(0xf8, 0xf8, 0xf8);

@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HanYouCollectionViewCell : UICollectionViewCell
+@interface HanYouCollectionViewCell : UICollectionViewCell<BaseViewDelegate>
 - (void)color;
 @end

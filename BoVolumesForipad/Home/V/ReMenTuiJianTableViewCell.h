@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JKStarDisplayView.h"
 
 @interface ReMenTuiJianTableViewCell : UITableViewCell
 @property(nonatomic,assign)BookCaseStyle bookCase;
+
+@property(nonatomic,strong) JKStarDisplayView *jKStarDisplayView;
 
 @end
