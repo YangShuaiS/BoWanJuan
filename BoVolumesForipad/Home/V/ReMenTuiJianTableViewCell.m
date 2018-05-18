@@ -187,7 +187,8 @@
         make.top.equalTo(self->subtitle.mas_bottom).with.offset(LENGTH(24));
         make.left.equalTo(self->leftImage.mas_right).with.offset(LENGTH(27));
         make.width.mas_equalTo(LENGTH(165));
-//        make.bottom.equalTo(self->leftImage.mas_bottom).with.offset(LENGTH(0));
+        
+        
     }];
 
 
