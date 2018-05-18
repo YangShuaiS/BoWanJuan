@@ -93,7 +93,12 @@
     fenlei.backgroundColor = RANDOMCOLOR;
     [viewarray addObject:fenlei];
     //寒假作业
+    NSMutableArray * itme = [NSMutableArray array];
+    for (int i = 0; i < 5; i++) {
+        [itme addObject:[NSString stringWithFormat:@"%d",i]];
+    }
     hanjiazuoye = [HanJIaZuoYe new];
+    hanjiazuoye.itemarray = itme;
     hanjiazuoye.backgroundColor = BEIJINGCOLOR;
     [viewarray addObject:hanjiazuoye];
     //适读
